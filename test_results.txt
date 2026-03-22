@@ -1,0 +1,33 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-8.3.5, pluggy-1.5.0
+rootdir: /data2/ikun/1￥￥￥/LCPU/assignment4-data
+configfile: pyproject.toml
+plugins: hydra-core-1.3.2, jaxtyping-0.3.2
+collected 6 items
+
+tests/test_extract.py::test_extract_text_from_html_bytes FAILED
+tests/test_pii.py::test_mask_emails_single PASSED
+tests/test_pii.py::test_mask_emails_multiple PASSED
+tests/test_pii.py::test_mask_emails_existing_string PASSED
+tests/test_pii.py::test_mask_phones_single PASSED
+tests/test_pii.py::test_mask_ips PASSED
+
+=================================== FAILURES ===================================
+______________________ test_extract_text_from_html_bytes _______________________
+
+    def test_extract_text_from_html_bytes():
+        moby_path = FIXTURES_PATH / "moby.html"
+        with open(moby_path, "rb") as f:
+            moby_bytes = f.read()
+        moby_expected_path = FIXTURES_PATH / "moby_extracted.txt"
+        with open(moby_expected_path) as f:
+            moby_expected_text = f.read()
+>       assert moby_expected_text == run_extract_text_from_html_bytes(moby_bytes)
+E       assert "Herman Melville - Moby-Dick\n\nAvailing himself of the mild, summer-cool weather that now reigned in these latitudes, and in preparation for the peculiarly active pursuits shortly to be anticipated, Perth, the begrimed, blistered old blacksmith, had not removed his portable forge to the hold again, after concluding his contributory work for Ahab's leg, but still retained it on deck, fast lashed to ringbolts by the foremast; being now almost incessantly invoked by the headsmen, and harpooneers, and bowsmen to do some little job for them; altering, or repairing, or new shaping their various weapons and boat furniture.\n\nThis is a test paragraph with a link.\n\n  • Novel" == None
+E        +  where None = run_extract_text_from_html_bytes(b'<!DOCTYPE html>\n<html>\n  <head>\n    <meta name="author" content="Herman Melville"/>\n    <meta name="og:site_name" content="Dummy Site"/>\n    <meta name="keywords" content="novel"/>\n  </head>\n  <body>\n      <div id="content-main">\n      <h1>Herman Melville - Moby-Dick</h1>\n      <div>\n        <p>\n          Availing himself of the mild, summer-cool weather that now reigned in\n          these latitudes, and in preparation for the peculiarly active pursuits\n          shortly to be anticipated, Perth, the begrimed, blistered old\n          blacksmith, had not removed his portable forge to the hold again,\n          after concluding his contributory work for Ahab\'s leg, but still\n          retained it on deck, fast lashed to ringbolts by the foremast; being\n          now almost incessantly invoked by the headsmen, and harpooneers, and\n          bowsmen to do some little job for them; altering, or repairing, or new\n          shaping their various weapons and boat furniture.\n        </p>\n        <img src="test.jpg" title="Example image"/>\n        <p>This is a test paragraph with a <a href="testlink.html">link</a>.</p>\n      </div>\n      <div class="tags">\n      <ul>\n          <li>Novel</li>\n      </ul>\n      </div>\n      </div>\n  </body>\n</html>\n')
+
+tests/test_extract.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_extract.py::test_extract_text_from_html_bytes - assert "Herman Melville - Moby-Dick\n\nAvailing himself of the mild, summer-cool weather that now reigned in these latitudes, and in preparation for the peculiarly active pursuits shortly to be anticipated, Perth, the begrimed, blistered old blacksmith, had not removed his portable forge to the hold again, after concluding his contributory work for Ahab's leg, but still retained it on deck, fast lashed to ringbolts by the foremast; being now almost incessantly invoked by the headsmen, and harpooneers, and bowsmen to do some little job for them; altering, or repairing, or new shaping their various weapons and boat furniture.\n\nThis is a test paragraph with a link.\n\n  • Novel" == None
+ +  where None = run_extract_text_from_html_bytes(b'<!DOCTYPE html>\n<html>\n  <head>\n    <meta name="author" content="Herman Melville"/>\n    <meta name="og:site_name" content="Dummy Site"/>\n    <meta name="keywords" content="novel"/>\n  </head>\n  <body>\n      <div id="content-main">\n      <h1>Herman Melville - Moby-Dick</h1>\n      <div>\n        <p>\n          Availing himself of the mild, summer-cool weather that now reigned in\n          these latitudes, and in preparation for the peculiarly active pursuits\n          shortly to be anticipated, Perth, the begrimed, blistered old\n          blacksmith, had not removed his portable forge to the hold again,\n          after concluding his contributory work for Ahab\'s leg, but still\n          retained it on deck, fast lashed to ringbolts by the foremast; being\n          now almost incessantly invoked by the headsmen, and harpooneers, and\n          bowsmen to do some little job for them; altering, or repairing, or new\n          shaping their various weapons and boat furniture.\n        </p>\n        <img src="test.jpg" title="Example image"/>\n        <p>This is a test paragraph with a <a href="testlink.html">link</a>.</p>\n      </div>\n      <div class="tags">\n      <ul>\n          <li>Novel</li>\n      </ul>\n      </div>\n      </div>\n  </body>\n</html>\n')
+========================= 1 failed, 5 passed in 0.04s ==========================

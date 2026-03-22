@@ -26,6 +26,7 @@ zip -r "$output_file" . \
     -x '.git*' \
     -x '.venv/*' \
     -x '*.bin' \
+    -x '*.gz' \
     -x '*.pt' \
     -x '*.pth'
 

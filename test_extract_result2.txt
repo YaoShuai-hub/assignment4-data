@@ -1,0 +1,47 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-8.3.5, pluggy-1.5.0
+rootdir: /data2/ikun/1￥￥￥/LCPU/assignment4-data
+configfile: pyproject.toml
+plugins: hydra-core-1.3.2, jaxtyping-0.3.2
+collected 1 item
+
+tests/test_extract.py::test_extract_text_from_html_bytes EXCEPTION fallback: bytes_to_str() got an unexpected keyword argument 'fallback'
+FAILED
+
+=================================== FAILURES ===================================
+______________________ test_extract_text_from_html_bytes _______________________
+
+    def test_extract_text_from_html_bytes():
+        moby_path = FIXTURES_PATH / "moby.html"
+        with open(moby_path, "rb") as f:
+            moby_bytes = f.read()
+        moby_expected_path = FIXTURES_PATH / "moby_extracted.txt"
+        with open(moby_expected_path) as f:
+            moby_expected_text = f.read()
+>       assert moby_expected_text == run_extract_text_from_html_bytes(moby_bytes)
+E       AssertionError: assert 'Herman Melvi...\n\n  • Novel' == 'Herman Melvi... with a link.'
+E         
+E           Herman Melville - Moby-Dick
+E           
+E           Availing himself of the mild, summer-cool weather that now reigned in these latitudes, and in preparation for the peculiarly active pursuits shortly to be anticipated, Perth, the begrimed, blistered old blacksmith, had not removed his portable forge to the hold again, after concluding his contributory work for Ahab's leg, but still retained it on deck, fast lashed to ringbolts by the foremast; being now almost incessantly invoked by the headsmen, and harpooneers, and bowsmen to do some little job for them; altering, or repairing, or new shaping their various weapons and boat furniture.
+E           
+E         - This is a test paragraph with a link.
+E         + This is a test paragraph with a link.
+E         ?                                      +
+E         + 
+E         +   • Novel
+
+tests/test_extract.py:16: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_extract.py::test_extract_text_from_html_bytes - AssertionError: assert 'Herman Melvi...\n\n  • Novel' == 'Herman Melvi... with a link.'
+  
+    Herman Melville - Moby-Dick
+    
+    Availing himself of the mild, summer-cool weather that now reigned in these latitudes, and in preparation for the peculiarly active pursuits shortly to be anticipated, Perth, the begrimed, blistered old blacksmith, had not removed his portable forge to the hold again, after concluding his contributory work for Ahab's leg, but still retained it on deck, fast lashed to ringbolts by the foremast; being now almost incessantly invoked by the headsmen, and harpooneers, and bowsmen to do some little job for them; altering, or repairing, or new shaping their various weapons and boat furniture.
+    
+  - This is a test paragraph with a link.
+  + This is a test paragraph with a link.
+  ?                                      +
+  + 
+  +   • Novel
+============================== 1 failed in 0.03s ===============================
